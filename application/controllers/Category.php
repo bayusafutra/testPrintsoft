@@ -7,7 +7,6 @@ class Category extends CI_Controller {
         parent::__construct();
         $this->load->model('Category_model');
         $this->load->library('session');
-        // Cek jika belum login, redirect ke login
         if (!$this->session->userdata('logged_in')) {
             $this->session->set_flashdata('error', 'Silakan login terlebih dahulu!');
             redirect('auth/login');
@@ -20,7 +19,6 @@ class Category extends CI_Controller {
     }
 
     public function add() {
-        // Validasi input
         $this->form_validation->set_rules('nama', 'Nama Kategori', 'required|trim');
 
         if ($this->form_validation->run() == FALSE) {
@@ -29,7 +27,7 @@ class Category extends CI_Controller {
         } else {
             $data = [
                 'nama' => $this->input->post('nama', true),
-                'status' => 1 // Default true
+
             ];
 
             $result = $this->Category_model->insert_category($data);
@@ -44,7 +42,6 @@ class Category extends CI_Controller {
     }
 
     public function edit($id) {
-        // Validasi input
         $this->form_validation->set_rules('nama', 'Nama Kategori', 'required|trim');
 
         if ($this->form_validation->run() == FALSE) {
